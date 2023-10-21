@@ -42,8 +42,9 @@ def drive(speed, seconds):
     """
     Function for setting a linear velocity
 
-    Args: speed (int): the speed of the wheels
-          seconds (int): the time interval
+    Args: 
+    - speed (int): the speed of the wheels
+    - seconds (int): the time interval for which the robot should move
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = speed
@@ -56,8 +57,9 @@ def turn(speed, seconds):
     """
     Function for setting an angular velocity
 
-    Args: speed (int): the speed of the wheels
-          seconds (int): the time interval
+    Args: 
+    - speed (int): the speed of the wheels
+    - seconds (int): the time interval for which the robot should move
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = -speed
@@ -105,27 +107,6 @@ def find_first_token(first_token_code):
     else:
         return dist, rot_y
 
-"""
-def find_arena_token():
-
-    #Function to find the closest golden token
-
-    #Returns:
-    #    dist (float): distance of the closest golden token (-1 if no golden token is detected)
-    #   rot_y (float): angle between the robot and the golden token (-1 if no golden token is detected)
-
-    dist = 1000
-    for token in R.see():
-        if token.dist < dist and token.info.marker_type is MARKER_ARENA:
-            dist = token.dist
-            rot_y = token.rot_y
-    if dist == 1000:
-        return -1, -1
-    else:
-        return dist, rot_y
-"""
-
-
 while 1:
     #at the beginning of the program, the if condition is true so that the first token can be detected and saved in the list
     if not firsttoken:
@@ -143,6 +124,7 @@ while 1:
             turn(10, 1)
         elif dist < d_th:  # if we are close to the token
             print("Token detected")
+            #if the robot is not holding a token, it means it reached it to grab it
             if not holding:
                 if R.grab():  # if we grab the token, we move the robot forward and on the right, we release the token, and we go back to the initial position
                     print("Token grabbed")
@@ -151,11 +133,13 @@ while 1:
                     d_th = 0.8
                 else:
                     print("Golden token still too far to be grabbed")
+
+            #if the robot is holding a token, it means it reached the reference one and needs to release the token it is holding
             else:
                 R.release()
-                list_found_token.append(token_code) #since the token was successfully moved near the reference one, add it to the list_found_token so that it won't be detected again
+                #list_found_token.append(token_code) #since the token was successfully moved near the reference one, add it to the list_found_token so that it won't be detected again
                 drive(-10, 2) #move backwards
-                turn(30, 2) #turn to reposition to find the next token
+                turn(30, 2) #turn about 180° to reposition to find the next token
                 holding = False
                 firsttoken = False
                 d_th = 0.4
