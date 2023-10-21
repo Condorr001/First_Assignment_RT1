@@ -75,12 +75,13 @@ def find_golden_token():
     Returns:
         dist (float): distance of the closest golden token (-1 if no golden token is detected)
         rot_y (float): angle between the robot and the golden token (-1 if no golden token is detected)
+        token_code (int): numeric code of the token
     """
     dist = 100
     for token in R.see():
         if token.dist < dist and token.info.marker_type is MARKER_TOKEN_GOLD:
             if token.info.code in list_found_token:
-                return -1, -1, -1
+                return -1, -1, token.info.code
             dist = token.dist
             rot_y = token.rot_y
             token_code = token.info.code
@@ -122,6 +123,7 @@ while 1:
         if dist == -1:  # if no token is detected, we make the robot turn
             print("No token detected. Adjusting my orientation")
             turn(10, 1)
+
         elif dist < d_th:  # if we are close to the token
             print("Token detected")
             #if the robot is not holding a token, it means it reached it to grab it
@@ -139,17 +141,22 @@ while 1:
                 R.release()
                 drive(-10, 2) #move backwards
                 turn(30, 2) #turn about 180° to reposition to find the next token
+
                 if token_code not in list_found_token:
                     list_found_token.append(token_code)
+
                 holding = False
                 firsttoken = False
                 d_th = 0.4
+
         elif -a_th <= rot_y <= a_th:  # if the robot is well aligned with the token, we go forward
             print("Orientation set. Moving towards the token")
             drive(20, 0.5)
+
         elif rot_y < -a_th:  # if the robot is not well aligned with the token, we move it on the left or on the right
             print("Turning left to align with the center of the token")
             turn(-2, 0.5)
+
         elif rot_y > a_th:
             print("Turning right to align with the center of the token")
             turn(2, 0.5)
