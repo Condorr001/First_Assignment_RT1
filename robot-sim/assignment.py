@@ -137,9 +137,10 @@ while 1:
             #if the robot is holding a token, it means it reached the reference one and needs to release the token it is holding
             else:
                 R.release()
-                #list_found_token.append(token_code) #since the token was successfully moved near the reference one, add it to the list_found_token so that it won't be detected again
                 drive(-10, 2) #move backwards
                 turn(30, 2) #turn about 180° to reposition to find the next token
+                if token_code not in list_found_token:
+                    list_found_token.append(token_code)
                 holding = False
                 firsttoken = False
                 d_th = 0.4
