@@ -140,19 +140,12 @@ while 1:
     else:
         if dist == -1:  # if no token is detected, we make the robot turn
             print("No token detected. Adjusting my orientation")
-            turn(+10, 1)
+            turn(10, 1)
         elif dist < d_th:  # if we are close to the token
             print("Token detected")
             if not holding:
                 if R.grab():  # if we grab the token, we move the robot forward and on the right, we release the token, and we go back to the initial position
                     print("Token grabbed")
-                    """
-                    turn(20, 2)
-                    drive(20, 2)
-                    R.release()
-                    drive(-20, 2)
-                    turn(-20, 2)
-                    """
                     holding = True
                     firsttoken = True
                     d_th = 0.8
@@ -160,8 +153,9 @@ while 1:
                     print("Golden token still too far to be grabbed")
             else:
                 R.release()
-                drive(-10, 2)
-                turn(30, 2) #turn 180°
+                list_found_token.append(token_code) #since the token was successfully moved near the reference one, add it to the list_found_token so that it won't be detected again
+                drive(-10, 2) #move backwards
+                turn(30, 2) #turn to reposition to find the next token
                 holding = False
                 firsttoken = False
                 d_th = 0.4
