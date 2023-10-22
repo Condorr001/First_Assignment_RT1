@@ -25,8 +25,14 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
+n_tokens = 0
+""" int: number of tokens detected at the beginning of the program"""
+
 list_found_token = []
-""" list: list of found golden token so that they won't be picked up twice """
+""" list: list of found golden token at the beginning of the program """
+
+list_moved_token = []
+""" list: list of moved golden token so that they won't be picked up twice """
 
 firsttoken = False
 """ boolean: check if I need to detect the first golden token to reach it"""
@@ -80,7 +86,7 @@ def find_golden_token():
     dist = 100
     for token in R.see():
         if token.dist < dist and token.info.marker_type is MARKER_TOKEN_GOLD:
-            if token.info.code in list_found_token:
+            if token.info.code in list_moved_token:
                 return -1, -1, token.info.code
             dist = token.dist
             rot_y = token.rot_y
@@ -108,16 +114,26 @@ def find_first_token(first_token_code):
     else:
         return dist, rot_y
 
+for i in range(11):
+    print("Looking for tokens")
+    turn(10, 1)
+    markers = R.see()
+    for m in markers:
+        if m.info.code not in list_found_token:
+            list_found_token.append(m.info.code)
+
+print(len(list_found_token), " token found")
+
 while 1:
     #at the beginning of the program, the if condition is true so that the first token can be detected and saved in the list
     if not firsttoken:
         dist, rot_y, token_code = find_golden_token()
     else:
-        dist, rot_y = find_first_token(list_found_token[0])
+        dist, rot_y = find_first_token(list_moved_token[0])
 
     #if the list is empty, add the code of the detected token to the list and use it as the reference for the repositioning of all other tokens
-    if not list_found_token:
-        list_found_token.append(token_code)
+    if not list_moved_token:
+        list_moved_token.append(token_code)
 
     else:
         if dist == -1:  # if no token is detected, we make the robot turn
@@ -140,10 +156,10 @@ while 1:
             else:
                 R.release()
                 drive(-10, 2) #move backwards
-                turn(30, 2) #turn about 180° to reposition to find the next token
+                #turn(30, 2) #turn about 180° to reposition to find the next token
 
-                if token_code not in list_found_token:
-                    list_found_token.append(token_code)
+                if token_code not in list_moved_token:
+                    list_moved_token.append(token_code)
 
                 holding = False
                 firsttoken = False
@@ -160,3 +176,8 @@ while 1:
         elif rot_y > a_th:
             print("Turning right to align with the center of the token")
             turn(2, 0.5)
+
+        if len(list_found_token) == len(list_moved_token):
+            turn(0, 0.5)
+            print("Task completed")
+            break
