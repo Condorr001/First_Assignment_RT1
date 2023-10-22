@@ -114,6 +114,10 @@ def find_first_token(first_token_code):
     else:
         return dist, rot_y
 
+"""
+Initial check: the robot checks for all the tokens around it and all the tokens are saved in the list_found_token
+The range has been set at 11 because executing turn(10, 1) 11 times makes the robot turn 360° on itself
+"""
 for i in range(11):
     print("Looking for tokens")
     turn(10, 1)
@@ -124,14 +128,17 @@ for i in range(11):
 
 print(len(list_found_token), " token found")
 
+"""
+Loop program begins
+"""
 while 1:
-    #at the beginning of the program, the if condition is true so that the first token can be detected and saved in the list
+    #at the beginning of the program, the if condition is true so that the first (reference) token can be detected and saved in the list
     if not firsttoken:
         dist, rot_y, token_code = find_golden_token()
     else:
         dist, rot_y = find_first_token(list_moved_token[0])
 
-    #if the list is empty, add the code of the detected token to the list and use it as the reference for the repositioning of all other tokens
+    #if the list is empty, add the code of the detected token to the list and use it as the reference for the repositioning of all the other tokens
     if not list_moved_token:
         list_moved_token.append(token_code)
 
@@ -144,15 +151,15 @@ while 1:
             print("Token detected")
             #if the robot is not holding a token, it means it reached it to grab it
             if not holding:
-                if R.grab():  # if we grab the token, we move the robot forward and on the right, we release the token, and we go back to the initial position
+                if R.grab():  # if the token is grabbed, firsttoken is set to True so that the robot will move towards the first (reference) token
                     print("Token grabbed")
                     holding = True
                     firsttoken = True
-                    d_th = 0.8
+                    d_th *= 2 # the distance between the center of the robot and the reference token is doubled because the robot is holding a token
                 else:
                     print("Golden token still too far to be grabbed")
 
-            #if the robot is holding a token, it means it reached the reference one and needs to release the token it is holding
+            #if the robot is holding a token, it means it reached the reference one and needs to release the token it's holding
             else:
                 R.release()
                 drive(-15, 2) #move backwards
@@ -161,8 +168,8 @@ while 1:
                     list_moved_token.append(token_code)
 
                 holding = False
-                firsttoken = False
-                d_th = 0.4
+                firsttoken = False #now the robot will look for the next token to move
+                d_th /= 2
 
         elif -a_th <= rot_y <= a_th:  # if the robot is well aligned with the token, we go forward
             print("Orientation set. Moving towards the token")
@@ -176,6 +183,7 @@ while 1:
             print("Turning right to align with the center of the token")
             turn(2, 0.5)
 
+        #if all the tokens have been moved, stop the robot
         if len(list_found_token) == len(list_moved_token):
             turn(0, 0.5)
             print("Task completed")
