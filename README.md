@@ -63,7 +63,7 @@ This function is used each time the robot has grabbed a token and needs to move 
 ## Flowchart
 The following flowchart summarized the behaviour of the program:
 
-![alt text](https://github.com/Condorr001/First_Assignment_RT1/blob/main/robot-sim/flowchart/assignment_1_flowchart.pngraw=true)
+![alt text](https://github.com/Condorr001/First_Assignment_RT1/blob/main/robot-sim/flowchart/assignment_1_flowchart.png)
 
 
 ## Further Improvements
