@@ -60,6 +60,8 @@ The last function was created during this assignment and it behaves as follows:
 
 This function is used each time the robot has grabbed a token and needs to move it close to the reference token.
 
+Lastly, it has to be mentioned that both `find_golden_token()` and `find_first_token()` ise the function `R.see()` of the Robot() class. Check the professor repo for detailed information about this function.
+
 ## Flowchart
 The following flowchart summarized the behaviour of the program:
 
