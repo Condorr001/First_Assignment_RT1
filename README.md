@@ -69,5 +69,5 @@ The following flowchart summarized the behaviour of the program:
 
 
 ## Further Improvements
-This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `move()` and `turn()`.
+This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `drive()` and `turn()`.
 Secondly and lastly, it would be more efficient and elegant to move the reference token to the center of the arena, so that all the tokens are grouped at the center. In this particular example, the efficiency would improve, as all the tokens are placed in a circle with the arena as its center.
