@@ -7,11 +7,11 @@ from sr.robot import *
 Assignment 1 Research Track 1 - Valentina Condorelli S4945679
 
 The first assignment of RT1 consists of making the robot compute the following steps: 
-	- 1) find and grab the closest golden marker (token)
-	- 2) move the marker to the center of the Arena marker
-	- 3) find and grab the next closest golden marker (token)
-	- 4) move the marker and release it near the marker found in step 2
-	- 5) start again from 1 and repeat until all the golden markers are placed near each other (in this case, at the center of the Arena)
+	- 1) make a 360° turn to find all the golden tokens in the field
+	- 2) consider the first found token as the reference one
+	- 3) find and grab the next closest golden token
+	- 4) grab the token, move it and release it near the token found in step 2
+	- 5) start again from 1 and repeat until all the golden tokens are placed near each other, so close to the token found in step 2
 
 To run the program, type:
 	$ python3 run.py assignment1_Condorelli.py
@@ -20,13 +20,10 @@ To run the program, type:
 
 
 a_th = 2.0
-""" float: Threshold for the control of the linear distance"""
-
-d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
-n_tokens = 0
-""" int: number of tokens detected at the beginning of the program"""
+d_th = 0.4
+""" float: Threshold for the control of the linear distance"""
 
 list_found_token = []
 """ list: list of found golden token at the beginning of the program """
@@ -126,7 +123,7 @@ for i in range(11):
         if m.info.code not in list_found_token:
             list_found_token.append(m.info.code)
 
-print(len(list_found_token), " token found")
+print(len(list_found_token), "token found")
 
 """
 Loop program begins
