@@ -27,7 +27,7 @@ After the program is launched, you should see the field organized as follows:
 - A silver square at the center of the field, called the *arena*
 ### Generality
 
-This is the configuration provided for this assignment, but the code was made to be as general as possible. Therefore, the robot should be able to complete its task even with different configurations. In order to achieve that, at the start of the program, the robot makes an almost 360° turn on itself and all the tokens it detects are saved in a list. Since the robot can see all the tokens in the field that are strictly in front of it, this procedure guarantees that all the tokens are seen.
+This is the configuration provided for this assignment, but the code was made to be as general as possible. Therefore, the robot should be able to complete its task even with different configurations. In order to achieve that, at the start of the program, the robot makes an almost 360° turn on itself and all the tokens it detects are saved in a list. This is done with the `find_all_tokens()` function. Since the robot can see all the tokens in the field that are strictly in front of it, this procedure guarantees that all the tokens are seen.
 
 ## Constants
 The program is based on the following constants:
@@ -37,7 +37,7 @@ As provided, a_th = 2.0: this means that the robot is aligned with the token if 
 As provided, d_th = 0.4, since the distance between the center of the robot and its arm is 0.4 meters. This means that the robot is near to the token and can grab it if the distance between its center and the token is at max 0.4m.
 
 ## Functions
-A total of 4 functions were declared for this prgram. Using functions is the best procedure to avoid long and repeated blocks of code.
+A total of 5 functions were declared for this program. Using functions is the best procedure to avoid long and repeated blocks of code.
 
 The first two functions had already been implemented in previous exercises. They are:
 - `drive(speed, seconds)`: move the robot forwards or backwards according to the given linear `speed` for the defined amount of `seconds`;
@@ -53,12 +53,16 @@ The third function is partially inspired to a similar function used in the previ
 
 The last returned value was add for this specific context. Indeed, it is necessary to have the unique identifier of a token in order to add it to the necessary lists only if it wasn't already found previously.
 
-The last function was created during this assignment and it behaves as follows:
+The last two functions were created during this assignment and they behaves as follows:
 - `find_first_token()`: find the reference token and return:
  	- *dist*: the linear distance between the reference token and the center of the robot;
 	- *rot_y*: the orientation of the center of the robot w.r.t. the reference token
+	
+- `find_all_tokens()`: make the robot turn on itself of almost 360° degrees and add all the newly seen tokens to a list
 
 This function is used each time the robot has grabbed a token and needs to move it close to the reference token.
+
+Lastly, it has to be mentioned that `find_golden_token()`, `find_first_token()` and `find_all_tokens()` use the function `R.see()` of the Robot() class. Check the professor repo for detailed information about this function.
 
 ## Flowchart
 The following flowchart summarized the behaviour of the program:
@@ -67,5 +71,5 @@ The following flowchart summarized the behaviour of the program:
 
 
 ## Further Improvements
-This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `move()` and `turn()`.
+This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `drive()` and `turn()`.
 Secondly and lastly, it would be more efficient and elegant to move the reference token to the center of the arena, so that all the tokens are grouped at the center. In this particular example, the efficiency would improve, as all the tokens are placed in a circle with the arena as its center.

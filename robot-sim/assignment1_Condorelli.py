@@ -110,20 +110,28 @@ def find_first_token(first_token_code):
         return -1, -1
     else:
         return dist, rot_y
+        
+def find_all_tokens():
+    """
+    Function for initial check: the robot checks for all the tokens around it and all the tokens are saved in the list_found_token
+    The range has been set at 11 because executing turn(10, 1) 11 times makes the robot turn almost 360° on itself
+    """
+    for i in range(11):
+        print("Looking for tokens")
+        turn(10, 1)
+        markers = R.see()
+        for m in markers:
+            if m.info.code not in list_found_token:
+                list_found_token.append(m.info.code)
 
-"""
-Initial check: the robot checks for all the tokens around it and all the tokens are saved in the list_found_token
-The range has been set at 11 because executing turn(10, 1) 11 times makes the robot turn 360° on itself
-"""
-for i in range(11):
-    print("Looking for tokens")
-    turn(10, 1)
-    markers = R.see()
-    for m in markers:
-        if m.info.code not in list_found_token:
-            list_found_token.append(m.info.code)
+    print(len(list_found_token), "token found")
 
-print(len(list_found_token), "token found")
+
+""" 
+Program begins
+"""
+find_all_tokens()
+
 
 """
 Loop program begins
