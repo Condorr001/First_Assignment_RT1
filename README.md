@@ -63,6 +63,8 @@ This function is used each time the robot has grabbed a token and needs to move 
 ## Flowchart
 The following flowchart summarized the behaviour of the program:
 
+![alt text](https://github.com/Condorr001/First_Assignment_RT1/blob/main/robot-sim/flowchart/assignment_1_flowchart.pngraw=true)
+
 
 ## Further Improvements
 This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `move()` and `turn()`.
