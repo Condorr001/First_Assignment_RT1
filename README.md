@@ -14,11 +14,26 @@ The reference for this project is the `assignment23_python3` branch of the profe
 
 The first assignment of Research Track 1 consists of writing a Python node that controls the robot such that it brings all the **golden tokens** near one of them, called the **reference token**. Therefore, the robot should define one token as the reference, move all the other tokens close to it and stop.
 ### How to run the program
-To run the program, please:
-- Clone this repo
+To run the program, you can choose between two methods.
+If you have git:
+- Clone this repo by typing in the terminal:
+  ```bash
+  $ git clone https://github.com/Condorr001/First_Assignment_RT1.git
+  ```
 - Move into the `robot-sim` folder
-- Open the terminal in there
-- Type `$ python3 run.py assignment1_Condorelli.py`
+- Type in the terminal:
+  ```bash
+  $ python3 run.py assignment1_Condorelli.py
+  ```
+
+If you don't have git:
+- Download the .zip folder of this project by clicking on *<> Code* -> *Download ZIP*
+- Extract the .zip folder
+- Move into the `robot-sim` folder
+- Type in the terminal:
+  ```bash
+  $ python3 run.py assignment1_Condorelli.py
+  ```
 
 ## The field
 After the program is launched, you should see the field organized as follows:
@@ -72,4 +87,5 @@ The following flowchart summarized the behaviour of the program:
 
 ## Further Improvements
 This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `drive()` and `turn()`.
-Secondly and lastly, it would be more efficient and elegant to move the reference token to the center of the arena, so that all the tokens are grouped at the center. In this particular example, the efficiency would improve, as all the tokens are placed in a circle with the arena as its center.
+Secondly, it would be more efficient and elegant to move the reference token to the center of the arena, so that all the tokens are grouped at the center. In this particular example, the efficiency would improve, as all the tokens are placed in a circle with the arena as its center.
+Lastly, the number of tokens detected at the beginning is fundamental. It happened, even if only one time over more than 50 trials and in a fresh virtual machine, that the initially found tokens were 5 instead of 6. This, obviously, caused the robot to stop after 4 tokens had been moved to the reference one. Even though the problem was more likely associated to a bug of the virtual machine than to a program fault, the number of tokens initally detected has to be checked everytime the program is run.
