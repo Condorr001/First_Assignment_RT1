@@ -87,5 +87,7 @@ The following flowchart summarized the behaviour of the program:
 
 ## Further Improvements
 This program can be improved in a few ways. First of all, the general movement of the robot is slow: this is necessary has nothing can be done while the robot is moving due to the `sleep()` function used in `drive()` and `turn()`.
+
 Secondly, it would be more efficient and elegant to move the reference token to the center of the arena, so that all the tokens are grouped at the center. In this particular example, the efficiency would improve, as all the tokens are placed in a circle with the arena as its center.
+
 Lastly, the number of tokens detected at the beginning is fundamental. It happened, even if only one time over more than 50 trials and in a fresh virtual machine, that the initially found tokens were 5 instead of 6. This, obviously, caused the robot to stop after 4 tokens had been moved to the reference one. Even though the problem was more likely associated to a bug of the virtual machine than to a program fault, the number of tokens initally detected has to be checked everytime the program is run.
